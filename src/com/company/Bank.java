@@ -37,16 +37,45 @@ public class Bank {
 
     }
 
-    private static void Employee() throws SQLException{
+    private static void Employee() throws SQLException {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Please Login");
         EmployeeDao empDao = EmpDaoFactory.getEmployeeDao();
-        Employee emp = new Employee();
-       EmployeeDao.emp_Login(emp);
+         Employee employee = new Employee();
+         empDao.Login(employee);
+        Scanner scan = new Scanner(System.in);
 
-        System.out.println("What will you like to do 1) Check accounts 2) Reject account 3)Check transactions ");
+        System.out.println("What will you like to do 1) Check accounts 2) Status account 3)Check transactions ");
+        int user = scanner.nextInt();
 
+        switch (user) {
+            case 1:
+                emp_Check();
+                break;
+            case 2:
+                Status();
+                break;
+            case 3:
+                //Transactions();
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + user);
 
+        }
+    }
+
+    private static void Status() throws SQLException {
+        System.out.println("Are you going to 1)Approve or 2)Reject account ");
+        EmployeeDao employeeDao = EmpDaoFactory.getEmployeeDao();
+        Employee employee = new Employee();
+        Scanner scanner = new Scanner(System.in);
+
+        int user = scanner.nextInt();
+        if (user == 1) {
+            employeeDao.app_Status(employee);
+        } else {
+            employeeDao.rej_Status(employee);
+        }
     }
 
     private static void ex_Customer() throws SQLException {
@@ -58,7 +87,7 @@ public class Bank {
         customerDao.Login(customer);
         Scanner scan = new Scanner(System.in);
 
-            System.out.println("Would like to make a 1)Deposit 2)Withdraw 3)Transfer  4)Check or 5)Quit");
+            System.out.println("Would like to make a 1)Deposit 2)Withdraw 3)Transfer 4)Check or 5)Quit");
             int user = scanner.nextInt();
 
             switch (user) {
@@ -69,7 +98,8 @@ public class Bank {
                     Withdraw();
                     break;
                 case 3:
-                    //Transfer();
+                    Transfer();
+                    break;
                 case 4:
                     Check();
                     break;
@@ -81,6 +111,16 @@ public class Bank {
 
 
             }
+    }
+
+    private static void Transfer() throws SQLException{
+        System.out.println("Who will you like to transfer money to?");
+        CustomerDao customerDao = CustomerDaoFactory.getCustomerDao();
+        Customer customer = new Customer();
+        customerDao.Transfer(customer);
+        //customerDao.addDeposit(customer);
+        System.out.println("From where are you withdrawing.");
+        customerDao.Withdraw(customer);
     }
 
     private static void Check() throws SQLException {
@@ -108,7 +148,7 @@ public class Bank {
                     Withdraw();
                     break;
                 case 3:
-                    //Transfer();
+                    Transfer();
                 case 4:
                     System.out.println("Thank for your service");
                     System.exit(0);
@@ -137,4 +177,11 @@ public class Bank {
         Customer customer = new Customer();
         customerDao.addDeposit(customer);
     }
-}
+
+
+    private static void emp_Check() throws SQLException {
+        EmployeeDao employeeDao = EmpDaoFactory.getEmployeeDao();
+        Employee employee = new Employee();
+        employeeDao.emp_Check(employee);
+    }
+    }

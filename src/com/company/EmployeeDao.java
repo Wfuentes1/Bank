@@ -5,9 +5,15 @@ import java.sql.SQLException;
 public interface EmployeeDao {
 
 
-    static void emp_Login(Employee emp) throws SQLException {
+     void Login(Employee employee) throws SQLException;
 
-    }
 
-    void Check(Customer customer) throws SQLException;
+
+
+    void emp_Check(Employee employee) throws SQLException;
+
+
+    void app_Status(Employee employee) throws SQLException;
+
+    void rej_Status(Employee employee) throws SQLException;
 }
