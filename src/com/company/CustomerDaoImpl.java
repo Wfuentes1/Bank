@@ -6,8 +6,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.InputMismatchException;
 import java.util.Scanner;
+
+import static com.company.Bank.ex_Customer;
 
 public class CustomerDaoImpl implements CustomerDao {
 
@@ -55,9 +56,9 @@ public class CustomerDaoImpl implements CustomerDao {
         Scanner scanner = new Scanner(System.in);
        int custBala = scanner.nextInt();
         //int amount = custBala;
-        preparedStatement.setInt(1, custBala);
+        preparedStatement.setInt(1, custBala);//if negative number are withdraw then the program ends
         if (custBala > 0 ) {
-            System.out.println("Please give your password.");
+            System.out.println("Please verify your password.");
             String username = scanner.next();
             preparedStatement.setString(2, username);
             int count = preparedStatement.executeUpdate();
@@ -68,20 +69,21 @@ public class CustomerDaoImpl implements CustomerDao {
 
             }
         }
+        ex_Customer();
     }
 
 
     @Override
-    public void Withdraw(Customer customer) throws SQLException {
+    public void Withdraw(Customer customer) throws SQLException {//if negative number are withdraw then the program ends
         int custBala = 0;
-        String query = "Update customer set balance= balance - ? where password=(?) ";
+        String query = "Update customer set balance= balance - ? where password=(?)";
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         Scanner scanner = new Scanner(System.in);
         // int amt = scanner.nextInt();
         custBala = scanner.nextInt();
         // String amount = "Select from Customer balance where user_name=(?)";
         preparedStatement.setInt(1, custBala);
-        if (custBala > 0 ) {
+        if (custBala > 0 && custBala<10000) {
             System.out.println("Please verify your password.");
             String cust_pass = scanner.next();
             preparedStatement.setString(2, cust_pass);
@@ -93,6 +95,7 @@ public class CustomerDaoImpl implements CustomerDao {
                 System.out.println("Oops!, something went wrong");
             }
         }
+        ex_Customer();
     }
 
 
@@ -127,22 +130,47 @@ public class CustomerDaoImpl implements CustomerDao {
         preparedStatement.setString(1, cust_pass);
         ResultSet count = preparedStatement.executeQuery();
         while (count.next()) {
-            System.out.println("Id: " + count.getInt(1)  + ", balance: " + count.getString(4)+ ", status: " + count.getString(5));
+            System.out.println("Id: " + count.getInt(1)  + ", balance: " + count.getString(4));
         }
+        ex_Customer();
     }
-/*
+
     @Override
-    public void Transfer(Customer customer) throws SQLException{
-        String query = "Update transfer set Transfer_to= (?) , Transfer_from=(?) , amount =amount + (?) ";
+    public void Transfer_In(Customer customer) throws SQLException{
+        String query = "Update customer set transfer_in= (?) , balance =balance + transfer_in where user_name=(?) ";
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         Scanner scanner = new Scanner(System.in);
-        String to_name = scanner.next();
-        preparedStatement.setString(1, to_name);
-        String from_name= scanner.next();
-        preparedStatement.setString(2, from_name);
-        int custBala= scanner.nextInt();
-        preparedStatement.setInt(3, custBala);
-        if (custBala > 0) {
+        System.out.println("How much will you like to transfer in?");
+        int to_name = scanner.nextInt();
+        preparedStatement.setInt(1, to_name);
+
+        System.out.println("Who are you transferring into?");
+        String  user= scanner.next();
+        preparedStatement.setString(2,user);
+        Transfer_Out(customer);
+        if (to_name > 0) {
+            int count = preparedStatement.executeUpdate();
+            if (count > 0) {
+                System.out.println("Transferred saved\n");
+            } else {
+                System.out.println("Oops!, something went wrong");
+            }
+        }
+        ex_Customer();
+    }
+
+    @Override
+    public void Transfer_Out(Customer customer) throws SQLException{
+        String query = "Update customer set transfer_out= (?) , balance =balance - transfer_out where user_name=(?) ";
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("How much will you like to transfer out?");
+        int to_name = scanner.nextInt();
+        preparedStatement.setInt(1, to_name);
+        System.out.println("Who are you transferring out from?");
+        String  user= scanner.next();
+        preparedStatement.setString(2,user);
+        if (to_name > 0) {
             int count = preparedStatement.executeUpdate();
             if (count > 0) {
                 System.out.println("Transferred saved\n");
@@ -152,8 +180,6 @@ public class CustomerDaoImpl implements CustomerDao {
         }
 
     }
-*/
-
 
 
 }

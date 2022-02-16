@@ -8,15 +8,22 @@ import java.util.Scanner;
 public class Bank {
 
     public static void main(String[] args) throws ClassNotFoundException, SQLException {
-
+        CustomerDao customerDao = CustomerDaoFactory.getCustomerDao();
+        Customer customer = new Customer();
         Scanner input = new Scanner(System.in);
         System.out.println("Welcome to Revature Bank. Are you a 1) New Customer 2)Existing Customer or 3) Employee?");//using switch statement to chose options
         int user = input.nextInt();
         switch (user) {
             case 1:
-                new_Customer();
+                System.out.println("Welcome new customer! Please follow instructions to create your account.\n");
+                customerDao.addCustomer(customer);
+                ex_Customer();
                 break;
             case 2:
+                Scanner scanner = new Scanner(System.in);
+                System.out.println("Please Login");
+                customerDao.Login(customer);
+                Scanner scan = new Scanner(System.in);
                 ex_Customer();
                 break;
             case 3:
@@ -32,7 +39,7 @@ public class Bank {
 
     }
 
-    private static void Employee() throws SQLException {//employee will call login then let you decide your course of action
+    public static void Employee() throws SQLException {//employee will call login then let you decide your course of action
         Scanner scanner = new Scanner(System.in);
         System.out.println("Please Login");
         EmployeeDao empDao = EmpDaoFactory.getEmployeeDao();
@@ -45,13 +52,13 @@ public class Bank {
 
         switch (user) {
             case 1:
-                emp_Check();
+                empDao.emp_Check(employee);
                 break;
             case 2:
                 Status();
                 break;
             case 3:
-                Log();
+                empDao.Log(employee);
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + user);
@@ -59,12 +66,6 @@ public class Bank {
         }
     }
 
-    private static void Log() throws SQLException {
-        EmployeeDao employeeDao = EmpDaoFactory.getEmployeeDao();
-        Employee employee = new Employee();
-        employeeDao.Log(employee);
-        Scanner scanner = new Scanner(System.in);
-    }
 
     private static void Status() throws SQLException {
         System.out.println("Are you going to 1)Approve or 2)Reject account ");
@@ -80,30 +81,30 @@ public class Bank {
         }
     }
 
-    private static void ex_Customer() throws SQLException {
-
+    public static void ex_Customer() throws SQLException {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Please Login");
         CustomerDao customerDao = CustomerDaoFactory.getCustomerDao();
         Customer customer = new Customer();
-        customerDao.Login(customer);
         Scanner scan = new Scanner(System.in);
 
-            System.out.println("Would like to make a 1)Deposit 2)Withdraw 3)Transfer 4)Check or 5)Quit");
+            System.out.println("Would like to make a transaction: 1)Deposit 2)Withdraw 3)Transfer 4)Check or 5)Quit");
             int user = scanner.nextInt();
 
             switch (user) {
                 case 1:
-                    Deposit();
+                    System.out.println("Please enter amount you wished to deposit.");
+                    customerDao.addDeposit(customer);
                     break;
                 case 2:
-                    Withdraw();
+                    System.out.println("Please enter amount you wished to withdraw.");
+                    customerDao.Withdraw(customer);
                     break;
                 case 3:
-                    Transfer();
+                    customerDao.Transfer_In(customer);
                     break;
                 case 4:
-                    Check();
+                    customerDao.Check(customer);
+                    //Check();
                     break;
                 case 5:
                     System.out.println("Thank for your service");
@@ -116,13 +117,12 @@ public class Bank {
     }
 
     private static void Transfer() throws SQLException{
-        System.out.println("Who will you like to transfer money to?");
+
         CustomerDao customerDao = CustomerDaoFactory.getCustomerDao();
         Customer customer = new Customer();
-        //customerDao.Transfer(customer);
-        //customerDao.addDeposit(customer);
-       // System.out.println("From where are you withdrawing.");
-        //customerDao.Withdraw(customer);
+        customerDao.Transfer_In(customer);
+
+
     }
 
     private static void Check() throws SQLException {
@@ -132,58 +132,32 @@ public class Bank {
     }
 
 
-    private static void new_Customer() throws SQLException {
-        System.out.println("Welcome new customer! Please follow instructions to create your account.\n");
-        CustomerDao customerDao = CustomerDaoFactory.getCustomerDao();
-        Customer customer = new Customer();
-        customerDao.addCustomer(customer);
 
-
-            System.out.println("Would like to make a 1)Deposit 2)Withdraw 3)Transfer or 4)Quit");
-            Scanner scan = new Scanner(System.in);
-            int user = scan.nextInt();
-            switch (user) {
-                case 1:
-                    Deposit();
-                    break;
-                case 2:
-                    Withdraw();
-                    break;
-                case 3:
-                    Transfer();
-                case 4:
-                    System.out.println("Thank for your service");
-                    System.exit(0);
-                    break;
-
-
-            }
-
-
-
-
-
-    }
-
-    private static void Withdraw() throws SQLException {
-        System.out.println("Please enter amount you wished to withdraw.");
-        CustomerDao customerDao = CustomerDaoFactory.getCustomerDao();
-        Customer customer = new Customer();
-        customerDao.Withdraw(customer);
-
-    }
-
-    private static void Deposit() throws SQLException {
-        System.out.println("Please enter amount you wished to deposit.");
-        CustomerDao customerDao = CustomerDaoFactory.getCustomerDao();
-        Customer customer = new Customer();
-        customerDao.addDeposit(customer);
-    }
-
-
-    private static void emp_Check() throws SQLException {
+    public static void new_Employee() throws SQLException {
+        Scanner scanner = new Scanner(System.in);
         EmployeeDao employeeDao = EmpDaoFactory.getEmployeeDao();
         Employee employee = new Employee();
-        employeeDao.emp_Check(employee);
+
+        System.out.println("What will you like to do next: 1) Check accounts 2) Status account 3)Check transactions 4) Quit");
+        int user = scanner.nextInt();
+
+        switch (user) {
+            case 1:
+                employeeDao.emp_Check(employee);
+                break;
+            case 2:
+                Status();
+                break;
+            case 3:
+                employeeDao.Log(employee);
+                break;
+            case 4:
+                System.out.println("Thank for your service");
+                System.exit(0);
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + user);
+
+        }
     }
     }

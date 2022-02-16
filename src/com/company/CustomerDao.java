@@ -16,7 +16,8 @@ void Login(Customer customer) throws SQLException;
     void Withdraw(Customer customer) throws SQLException;
 
 
-   // void TransferTo(Customer customer) throws SQLException;
+    void Transfer_In(Customer customer) throws SQLException;
 
-  //  void Transfer(Customer customer) throws SQLException;
+
+    void Transfer_Out(Customer customer) throws SQLException;
 }

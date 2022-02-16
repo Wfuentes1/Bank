@@ -5,6 +5,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
 
+import static com.company.Bank.new_Employee;
+
 
 public class EmployeeDaoImpl implements EmployeeDao {
     Connection connection;
@@ -45,14 +47,13 @@ public class EmployeeDaoImpl implements EmployeeDao {
     @Override
     public void emp_Check(Employee employee) throws SQLException {
         String sql="Call getCustomers()";
-        //String sql = "Select * from customer where user_name=(?)";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
-
         ResultSet count = preparedStatement.executeQuery();
         while (count.next()) {
             System.out.println("Id: " + count.getInt(1) + ", name: " +
                     count.getString(2) + ", balance: " + count.getString(4));
         }
+        new_Employee();
     }
 
 @Override
@@ -63,15 +64,13 @@ public class EmployeeDaoImpl implements EmployeeDao {
     System.out.println("Give username");
     String name=scanner.next();
     preparedStatement.setString(1, name);
-    //System.out.print("Approve or reject account");
-   // String stat=scanner.nextLine();
-   // preparedStatement.setString(1, stat);
     int count = preparedStatement.executeUpdate();
     if (count > 0) {
         System.out.println("Update saved\n");
     } else {
         System.out.println("Oops!, something went wrong");
     }
+    new_Employee();
 
 }
 @Override
@@ -82,15 +81,28 @@ public class EmployeeDaoImpl implements EmployeeDao {
         System.out.println("Give username");
         String name=scanner.next();
         preparedStatement.setString(1, name);
-
         int count = preparedStatement.executeUpdate();
+        //Lock(employee);
         if (count > 0) {
             System.out.println("Update saved\n");
         } else {
             System.out.println("Oops!, something went wrong");
         }
+    new_Employee();
 
     }
+    @Override
+    public void Lock(Employee employee) throws SQLException{//gets only the last transaction time
+        String sql ="Call LOCK()";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.executeQuery();
+
+
+
+    }
+
+
+
     @Override
     public void Log(Employee employee) throws SQLException{//gets only the last transaction time
         String sql ="Call LOG()";

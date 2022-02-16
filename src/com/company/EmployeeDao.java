@@ -17,5 +17,7 @@ public interface EmployeeDao {
 
     void rej_Status(Employee employee) throws SQLException;
 
+    void Lock(Employee employee) throws SQLException;
+
     void Log(Employee employee) throws SQLException;
 }
