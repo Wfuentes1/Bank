@@ -1,6 +1,5 @@
 package com.company;
 import java.sql.*;
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 
@@ -11,6 +10,8 @@ public class Bank {
         CustomerDao customerDao = CustomerDaoFactory.getCustomerDao();
         Customer customer = new Customer();
         Scanner input = new Scanner(System.in);
+
+
         System.out.println("Welcome to Revature Bank. Are you a 1) New Customer 2)Existing Customer or 3) Employee?");//using switch statement to chose options
         int user = input.nextInt();
         switch (user) {
@@ -28,8 +29,6 @@ public class Bank {
                 break;
             case 3:
                 Employee();
-               // System.out.println("You are an employee");
-
 
                 break;
             default:
@@ -67,12 +66,12 @@ public class Bank {
     }
 
 
-    private static void Status() throws SQLException {
+    public static void Status() throws SQLException {
         System.out.println("Are you going to 1)Approve or 2)Reject account ");
         EmployeeDao employeeDao = EmpDaoFactory.getEmployeeDao();
         Employee employee = new Employee();
         Scanner scanner = new Scanner(System.in);
-
+        employeeDao.Login(employee);
         int user = scanner.nextInt();
         if (user == 1) {
             employeeDao.app_Status(employee);
@@ -80,6 +79,22 @@ public class Bank {
             employeeDao.rej_Status(employee);
         }
     }
+
+    public static void cust_Status()throws SQLException{
+            EmployeeDao employeeDao = EmpDaoFactory.getEmployeeDao();
+            Employee employee = new Employee();
+            Scanner scanner = new Scanner(System.in);
+            employeeDao.Login(employee);
+            System.out.println("Are you going to 1)Approve or 2)Reject account status ");
+
+            int user = scanner.nextInt();
+            if (user == 1) {
+                employeeDao.app_Status(employee);
+            } else {
+                employeeDao.rej_Status(employee);
+            }
+        }
+
 
     public static void ex_Customer() throws SQLException {
         Scanner scanner = new Scanner(System.in);
@@ -114,21 +129,6 @@ public class Bank {
 
 
             }
-    }
-
-    private static void Transfer() throws SQLException{
-
-        CustomerDao customerDao = CustomerDaoFactory.getCustomerDao();
-        Customer customer = new Customer();
-        customerDao.Transfer_In(customer);
-
-
-    }
-
-    private static void Check() throws SQLException {
-        CustomerDao customerDao = CustomerDaoFactory.getCustomerDao();
-        Customer customer = new Customer();
-        customerDao.Check(customer);
     }
 
 

@@ -113,8 +113,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
                     count.getString(2) + ", Last Action: " + count.getString(3));
         }
 
-
+        new_Employee();
     }
-
 
 }

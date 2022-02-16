@@ -8,7 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
 
-import static com.company.Bank.ex_Customer;
+import static com.company.Bank.*;
 
 public class CustomerDaoImpl implements CustomerDao {
 
@@ -39,6 +39,7 @@ public class CustomerDaoImpl implements CustomerDao {
 
         preparedStatement.setInt(3, Integer.parseInt(cust_Bala));
         int count = preparedStatement.executeUpdate();
+        cust_Status();
         if (count > 0) {
             System.out.println("Customer saved\n");
         } else {
@@ -130,7 +131,7 @@ public class CustomerDaoImpl implements CustomerDao {
         preparedStatement.setString(1, cust_pass);
         ResultSet count = preparedStatement.executeQuery();
         while (count.next()) {
-            System.out.println("Id: " + count.getInt(1)  + ", balance: " + count.getString(4));
+            System.out.println("Id: " + count.getInt(1)  + ", Username: "+ count.getString(2 ) + ", balance: " + count.getString(4));
         }
         ex_Customer();
     }
@@ -144,7 +145,7 @@ public class CustomerDaoImpl implements CustomerDao {
         int to_name = scanner.nextInt();
         preparedStatement.setInt(1, to_name);
 
-        System.out.println("Who are you transferring into?");
+        System.out.println("What account are you transferring into?");
         String  user= scanner.next();
         preparedStatement.setString(2,user);
         Transfer_Out(customer);
@@ -167,7 +168,7 @@ public class CustomerDaoImpl implements CustomerDao {
         System.out.println("How much will you like to transfer out?");
         int to_name = scanner.nextInt();
         preparedStatement.setInt(1, to_name);
-        System.out.println("Who are you transferring out from?");
+        System.out.println("What account are you transferring from?");
         String  user= scanner.next();
         preparedStatement.setString(2,user);
         if (to_name > 0) {
