@@ -25,7 +25,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
         String sql = "Select * from employee where emp_name=(?) AND emp_pass=(?)";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Please give emp_name");
+        System.out.println("Please give Employee ID");
         String emp_username = scanner.next();
         preparedStatement.setString(1, emp_username);
         System.out.println("Please give password");
@@ -83,18 +83,18 @@ public class EmployeeDaoImpl implements EmployeeDao {
         String name=scanner.next();
         preparedStatement.setString(1, name);
         int count = preparedStatement.executeUpdate();
-        //Lock(employee);
+       // Lock(employee);
         if (count > 0) {
-            System.out.println("Update saved\n");
+            System.out.println("Customer rejected\n");
+            System.exit(0);
         } else {
             System.out.println("Oops!, something went wrong");
         }
 
-
     }
     @Override
     public void Lock(Employee employee) throws SQLException{//gets only the last transaction time
-        String sql ="Call LOCK()";
+        String sql ="Call del()";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
         preparedStatement.executeQuery();
 

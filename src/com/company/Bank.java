@@ -22,7 +22,7 @@ public class Bank {
                 break;
             case 2:
                 Scanner scanner = new Scanner(System.in);
-                System.out.println("Please Login");
+                System.out.println("Please Login\n");
                 customerDao.Login(customer);
                 Scanner scan = new Scanner(System.in);
                 ex_Customer();
@@ -40,7 +40,7 @@ public class Bank {
 
     public static void Employee() throws SQLException {//employee will call login then let you decide your course of action
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Please Login");
+        System.out.println("Please Login\n");
         EmployeeDao empDao = EmpDaoFactory.getEmployeeDao();
          Employee employee = new Employee();
          empDao.Login(employee);

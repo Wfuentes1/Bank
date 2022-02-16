@@ -39,13 +39,14 @@ public class CustomerDaoImpl implements CustomerDao {
 
         preparedStatement.setInt(3, Integer.parseInt(cust_Bala));
         int count = preparedStatement.executeUpdate();
-        cust_Status();
+        //cust_Status();
         if (count > 0) {
             System.out.println("Customer saved\n");
         } else {
             System.out.println("Oops!, something went wrong");
 
         }
+        cust_Status();
     }
 
 
@@ -63,7 +64,7 @@ public class CustomerDaoImpl implements CustomerDao {
             preparedStatement.setString(2, username);
             int count = preparedStatement.executeUpdate();
             if (count > 0) {
-                System.out.println("Customer saved\n");
+                System.out.println("Deposit saved\n");
             } else {
                 System.out.println("Oops!, something went wrong");
 
@@ -173,7 +174,7 @@ public class CustomerDaoImpl implements CustomerDao {
         if (to_name > 0) {
             int count = preparedStatement.executeUpdate();
             if (count > 0) {
-                System.out.println("Transferred saved\n");
+               // System.out.println("Transferred saved\n");
             } else {
                 System.out.println("Oops!, something went wrong");
             }
