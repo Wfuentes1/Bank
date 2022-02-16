@@ -57,12 +57,15 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
 @Override
     public void app_Status(Employee employee) throws SQLException{
-        String sql="update into  customer value status=('approve') where user_name =(?)";
+        String sql="update customer set status='approve' where user_name =?";
     PreparedStatement preparedStatement = connection.prepareStatement(sql);
     Scanner scanner = new Scanner(System.in);
     System.out.println("Give username");
     String name=scanner.next();
     preparedStatement.setString(1, name);
+    //System.out.print("Approve or reject account");
+   // String stat=scanner.nextLine();
+   // preparedStatement.setString(1, stat);
     int count = preparedStatement.executeUpdate();
     if (count > 0) {
         System.out.println("Update saved\n");
@@ -73,12 +76,13 @@ public class EmployeeDaoImpl implements EmployeeDao {
 }
 @Override
     public void rej_Status(Employee employee) throws SQLException{
-        String sql="Update into  customer value status='reject' where user_name =(?)";
+        String sql="Update customer set status='reject' where user_name =(?) ";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
         Scanner scanner = new Scanner(System.in);
         System.out.println("Give username");
         String name=scanner.next();
         preparedStatement.setString(1, name);
+
         int count = preparedStatement.executeUpdate();
         if (count > 0) {
             System.out.println("Update saved\n");
@@ -87,5 +91,18 @@ public class EmployeeDaoImpl implements EmployeeDao {
         }
 
     }
+    @Override
+    public void Log(Employee employee) throws SQLException{//gets only the last transaction time
+        String sql ="Call LOG()";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        ResultSet count = preparedStatement.executeQuery();
+        while (count.next()) {
+            System.out.println("Id: " + count.getInt(1) + ", user_name: " +
+                    count.getString(2) + ", Last Action: " + count.getString(3));
+        }
+
+
+    }
+
 
 }

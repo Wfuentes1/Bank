@@ -3,19 +3,14 @@ import java.sql.*;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-import static java.lang.Integer.*;
-
-
 
 
 public class Bank {
 
     public static void main(String[] args) throws ClassNotFoundException, SQLException {
 
-
-        // write your code here
         Scanner input = new Scanner(System.in);
-        System.out.println("Welcome to Revature Bank. Are you a 1) New Customer 2)Existing Customer or 3) Employee?");
+        System.out.println("Welcome to Revature Bank. Are you a 1) New Customer 2)Existing Customer or 3) Employee?");//using switch statement to chose options
         int user = input.nextInt();
         switch (user) {
             case 1:
@@ -37,7 +32,7 @@ public class Bank {
 
     }
 
-    private static void Employee() throws SQLException {
+    private static void Employee() throws SQLException {//employee will call login then let you decide your course of action
         Scanner scanner = new Scanner(System.in);
         System.out.println("Please Login");
         EmployeeDao empDao = EmpDaoFactory.getEmployeeDao();
@@ -56,12 +51,19 @@ public class Bank {
                 Status();
                 break;
             case 3:
-                //Transactions();
+                Log();
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + user);
 
         }
+    }
+
+    private static void Log() throws SQLException {
+        EmployeeDao employeeDao = EmpDaoFactory.getEmployeeDao();
+        Employee employee = new Employee();
+        employeeDao.Log(employee);
+        Scanner scanner = new Scanner(System.in);
     }
 
     private static void Status() throws SQLException {
@@ -117,10 +119,10 @@ public class Bank {
         System.out.println("Who will you like to transfer money to?");
         CustomerDao customerDao = CustomerDaoFactory.getCustomerDao();
         Customer customer = new Customer();
-        customerDao.Transfer(customer);
+        //customerDao.Transfer(customer);
         //customerDao.addDeposit(customer);
-        System.out.println("From where are you withdrawing.");
-        customerDao.Withdraw(customer);
+       // System.out.println("From where are you withdrawing.");
+        //customerDao.Withdraw(customer);
     }
 
     private static void Check() throws SQLException {
