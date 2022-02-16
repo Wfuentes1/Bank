@@ -21,10 +21,9 @@ public class Bank {
                 ex_Customer();
                 break;
             case 2:
-                Scanner scanner = new Scanner(System.in);
                 System.out.println("Please Login\n");
                 customerDao.Login(customer);
-                Scanner scan = new Scanner(System.in);
+
                 ex_Customer();
                 break;
             case 3:
@@ -44,7 +43,6 @@ public class Bank {
         EmployeeDao empDao = EmpDaoFactory.getEmployeeDao();
          Employee employee = new Employee();
          empDao.Login(employee);
-        Scanner scan = new Scanner(System.in);
 
         System.out.println("What will you like to do 1) Check accounts 2) Status account 3)Check transactions ");
         int user = scanner.nextInt();
@@ -71,7 +69,7 @@ public class Bank {
         EmployeeDao employeeDao = EmpDaoFactory.getEmployeeDao();
         Employee employee = new Employee();
         Scanner scanner = new Scanner(System.in);
-        employeeDao.Login(employee);
+        //employeeDao.Login(employee);
         int user = scanner.nextInt();
         if (user == 1) {
             employeeDao.app_Status(employee);
@@ -85,7 +83,7 @@ public class Bank {
             Employee employee = new Employee();
             Scanner scanner = new Scanner(System.in);
             employeeDao.Login(employee);
-            System.out.println("Are you going to 1)Approve or 2)Reject account status ");
+            System.out.println("Are you going to 1) Approve or 2) Reject account status ");
 
             int user = scanner.nextInt();
             if (user == 1) {
@@ -95,7 +93,34 @@ public class Bank {
             }
         }
 
+public static void coo_Employee() throws SQLException{
+    Scanner scanner = new Scanner(System.in);
+    EmployeeDao empDao = EmpDaoFactory.getEmployeeDao();
+    Employee employee = new Employee();
 
+
+    System.out.println("What will you like to do 1) Check accounts 2) Status account 3)Check transactions 4)Quit ");
+    int user = scanner.nextInt();
+
+    switch (user) {
+        case 1:
+            empDao.emp_Check(employee);
+            break;
+        case 2:
+            Status();
+            break;
+        case 3:
+            empDao.Log(employee);
+            break;
+        case 4:
+            System.out.println("Thank for your service");
+            System.exit(0);
+        default:
+            throw new IllegalStateException("Unexpected value: " + user);
+
+    }
+
+}
     public static void ex_Customer() throws SQLException {
         Scanner scanner = new Scanner(System.in);
         CustomerDao customerDao = CustomerDaoFactory.getCustomerDao();
@@ -119,7 +144,7 @@ public class Bank {
                     break;
                 case 4:
                     customerDao.Check(customer);
-                    //Check();
+
                     break;
                 case 5:
                     System.out.println("Thank for your service");

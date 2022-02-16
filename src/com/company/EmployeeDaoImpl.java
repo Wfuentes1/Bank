@@ -5,8 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
 
-import static com.company.Bank.ex_Customer;
-import static com.company.Bank.new_Employee;
+import static com.company.Bank.*;
 
 
 public class EmployeeDaoImpl implements EmployeeDao {
@@ -25,7 +24,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
         String sql = "Select * from employee where emp_name=(?) AND emp_pass=(?)";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Please give Employee ID");
+        System.out.println("Please give Admin ID");
         String emp_username = scanner.next();
         preparedStatement.setString(1, emp_username);
         System.out.println("Please give password");
@@ -70,13 +69,14 @@ public class EmployeeDaoImpl implements EmployeeDao {
         System.out.println("Update saved\n");
     } else {
         System.out.println("Oops!, something went wrong");
+        System.exit(0);
     }
     ex_Customer();
 
 }
 @Override
     public void rej_Status(Employee employee) throws SQLException{
-        String sql="Update customer set status='reject' where user_name =(?) ";
+        String sql="Update customer set status='reject', balance=NULL,transfer_in=NULL,transfer_out=NULL where user_name =(?) ";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
         Scanner scanner = new Scanner(System.in);
         System.out.println("Give username");
@@ -86,9 +86,10 @@ public class EmployeeDaoImpl implements EmployeeDao {
        // Lock(employee);
         if (count > 0) {
             System.out.println("Customer rejected\n");
-            System.exit(0);
+            coo_Employee();
         } else {
             System.out.println("Oops!, something went wrong");
+            System.exit(0);
         }
 
     }

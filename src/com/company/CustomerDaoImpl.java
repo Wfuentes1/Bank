@@ -80,9 +80,9 @@ public class CustomerDaoImpl implements CustomerDao {
         String query = "Update customer set balance= balance - ? where password=(?)";
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         Scanner scanner = new Scanner(System.in);
-        // int amt = scanner.nextInt();
+
         custBala = scanner.nextInt();
-        // String amount = "Select from Customer balance where user_name=(?)";
+
         preparedStatement.setInt(1, custBala);
         if (custBala > 0 && custBala<10000) {
             System.out.println("Please verify your password.");
@@ -161,7 +161,7 @@ public class CustomerDaoImpl implements CustomerDao {
     }
 
     @Override
-    public void Transfer_Out(Customer customer) throws SQLException{
+    public void Transfer_Out(Customer customer) throws SQLException{//takes money out of account
         String query = "Update customer set transfer_out= (?) , balance =balance - transfer_out where user_name=(?) ";
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         Scanner scanner = new Scanner(System.in);
@@ -174,7 +174,6 @@ public class CustomerDaoImpl implements CustomerDao {
         if (to_name > 0) {
             int count = preparedStatement.executeUpdate();
             if (count > 0) {
-               // System.out.println("Transferred saved\n");
             } else {
                 System.out.println("Oops!, something went wrong");
             }
