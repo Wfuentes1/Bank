@@ -56,7 +56,6 @@ public class CustomerDaoImpl implements CustomerDao {
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
         Scanner scanner = new Scanner(System.in);
        int custBala = scanner.nextInt();
-        //int amount = custBala;
         preparedStatement.setInt(1, custBala);//if negative number are withdraw then the program ends
         if (custBala > 0 ) {
             System.out.println("Please verify your password.");

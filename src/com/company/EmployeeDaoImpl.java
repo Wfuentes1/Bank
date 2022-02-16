@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
 
+import static com.company.Bank.ex_Customer;
 import static com.company.Bank.new_Employee;
 
 
@@ -70,7 +71,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
     } else {
         System.out.println("Oops!, something went wrong");
     }
-    new_Employee();
+    ex_Customer();
 
 }
 @Override
@@ -88,7 +89,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
         } else {
             System.out.println("Oops!, something went wrong");
         }
-    new_Employee();
+
 
     }
     @Override
